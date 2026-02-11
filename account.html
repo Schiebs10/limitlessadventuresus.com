@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Account — Limitless Adventure</title>
+    <meta name="description" content="View your account details and saved trip estimates." />
+</head>
+
+<body>
+    <!-- Hero -->
+    <section class="hero hero--short" id="hero">
+        <img src="/images/hero-about.png" alt="Mountain landscape" class="hero__image" />
+        <div class="hero__overlay"></div>
+        <div class="hero__content">
+            <h1 class="hero__title">My Account</h1>
+        </div>
+    </section>
+
+    <!-- Account Content -->
+    <section class="section" id="account">
+        <div class="container">
+
+            <!-- Loading -->
+            <div id="account-loading" class="account-card fade-in" style="text-align: center;">
+                <p style="font-size: 1.1rem;">Loading your account...</p>
+            </div>
+
+            <!-- Not Logged In -->
+            <div id="account-guest" class="account-card fade-in" style="display: none; text-align: center;">
+                <h2 style="margin-bottom: 1rem;">Sign In to Continue</h2>
+                <p style="margin-bottom: 2rem; color: #555;">
+                    Sign in to view your account, save trip estimates, and manage your bookings.
+                </p>
+                <a href="/auth/login" class="btn btn-primary btn-large">Sign In with AuthKit</a>
+            </div>
+
+            <!-- Logged In Content -->
+            <div id="account-content" style="display: none;">
+
+                <!-- User Info Card -->
+                <div class="account-card fade-in">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <h2 id="user-name" style="margin-bottom: 0.5rem;"></h2>
+                            <p id="user-email" style="color: #555;"></p>
+                        </div>
+                        <a href="/auth/logout" class="btn btn-outline" style="padding: 0.75rem 2rem;">Sign Out</a>
+                    </div>
+                </div>
+
+                <!-- Saved Trips -->
+                <div class="account-card fade-in" style="margin-top: 2rem;">
+                    <h3 style="margin-bottom: 1.5rem;">Saved Trip Estimates</h3>
+                    <div id="trips-list">
+                        <p style="color: #555;">Loading trips...</p>
+                    </div>
+                    <div id="trips-empty" style="display: none; text-align: center; padding: 2rem 0;">
+                        <p style="color: #999; font-size: 1.1rem;">✈️ No saved trips yet.</p>
+                        <p style="color: #999; margin-top: 0.5rem;">
+                            Search flights on the <a href="/travel-calculator.html"
+                                style="text-decoration: underline;">Travel Calculator</a>
+                            and save your favorite estimates here.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script type="module" src="/src/account.js"></script>
+</body>
+
+</html>

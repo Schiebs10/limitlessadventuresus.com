@@ -10,12 +10,17 @@ export default defineConfig({
         services: resolve(__dirname, 'services.html'),
         contact: resolve(__dirname, 'contact.html'),
         'travel-calculator': resolve(__dirname, 'travel-calculator.html'),
+        account: resolve(__dirname, 'account.html'),
       },
     },
   },
   server: {
     proxy: {
       '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      },
+      '/auth': {
         target: 'http://localhost:3001',
         changeOrigin: true,
       },

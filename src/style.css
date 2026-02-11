@@ -685,6 +685,102 @@ p {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* --- Auth Navbar --- */
+.navbar__auth-link {
+  background-color: var(--color-black);
+  color: var(--color-white) !important;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--border-radius-pill);
+  font-size: 0.8rem;
+  transition: all var(--transition-base);
+}
+
+.navbar__auth-link:hover {
+  background-color: #333;
+  transform: translateY(-1px);
+}
+
+.navbar__auth-link--active {
+  background-color: #27ae60;
+}
+
+.navbar__auth-link--active:hover {
+  background-color: #219a52;
+}
+
+.navbar__auth-link::after {
+  display: none !important;
+}
+
+/* --- Account Page --- */
+.account-card {
+  background: var(--color-white);
+  border-radius: 12px;
+  padding: var(--space-md);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.trip-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background: var(--color-bg);
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  transition: all var(--transition-base);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.trip-card:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.trip-card__route {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.trip-card__code {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+.trip-card__arrow {
+  color: var(--color-text-light);
+  font-size: 1.1rem;
+}
+
+.trip-card__details {
+  color: var(--color-text-light);
+  font-size: 0.85rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.trip-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.trip-card__price {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+}
+
+.trip-card__delete {
+  padding: 0.4rem 0.75rem !important;
+  font-size: 0.75rem !important;
+  min-width: auto;
+}
+
 /* --- Animations --- */
 @keyframes fadeUp {
   from {
