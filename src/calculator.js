@@ -7,43 +7,127 @@ renderNavbar();
 renderFooter();
 requestAnimationFrame(() => initFadeAnimations());
 
-// Travel Calculator Logic
-const baseCosts = {
-    caribbean: 200,
-    europe: 180,
-    asia: 120,
-    africa: 250,
-    'south-america': 150,
-    oceania: 220,
-};
-
-const tierMultipliers = {
-    budget: 0.7,
-    standard: 1.0,
-    premium: 1.6,
-    luxury: 2.8,
-};
-
+// --- Amadeus Flight Search ---
 const form = document.getElementById('calc-form');
 const resultEl = document.getElementById('calc-result');
+const loadingEl = document.getElementById('calc-loading');
+const errorEl = document.getElementById('calc-error');
 const amountEl = document.getElementById('result-amount');
+const detailsEl = document.getElementById('result-details');
+const offersEl = document.getElementById('result-offers');
+const searchBtn = document.getElementById('search-btn');
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
+// Set minimum date to today
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('depart-date').min = today;
+document.getElementById('return-date').min = today;
 
-    const destination = document.getElementById('destination').value;
-    const duration = parseInt(document.getElementById('duration').value, 10);
-    const travelers = parseInt(document.getElementById('travelers').value, 10);
-    const tier = document.getElementById('tier').value;
+function hideAll() {
+    resultEl.classList.remove('visible');
+    resultEl.style.display = 'none';
+    loadingEl.style.display = 'none';
+    errorEl.style.display = 'none';
+    errorEl.classList.remove('visible');
+}
 
-    if (!destination || !duration || !travelers || !tier) return;
+function showLoading() {
+    hideAll();
+    loadingEl.style.display = 'block';
+    loadingEl.classList.add('visible');
+    searchBtn.disabled = true;
+    searchBtn.textContent = 'Searching...';
+}
 
-    const dailyCost = baseCosts[destination] * tierMultipliers[tier];
-    const totalPerPerson = Math.round(dailyCost * duration);
-    const totalTrip = totalPerPerson * travelers;
+function showError(message) {
+    hideAll();
+    document.getElementById('error-message').textContent = message;
+    errorEl.style.display = 'block';
+    errorEl.classList.add('visible');
+    searchBtn.disabled = false;
+    searchBtn.textContent = 'Search Flights';
+    errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
 
-    amountEl.textContent = `$${totalPerPerson.toLocaleString()}`;
+function formatDuration(isoDuration) {
+    // PT2H30M → 2h 30m
+    const match = isoDuration.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);
+    if (!match) return isoDuration;
+    const hours = match[1] ? `${match[1]}h` : '';
+    const mins = match[2] ? ` ${match[2]}m` : '';
+    return `${hours}${mins}`.trim();
+}
+
+function showResults(data) {
+    hideAll();
+
+    const cheapest = data.cheapest;
+    amountEl.textContent = `$${parseFloat(cheapest.price).toLocaleString()}`;
+
+    const stopsText = cheapest.stops === 0 ? 'Nonstop' : `${cheapest.stops} stop${cheapest.stops > 1 ? 's' : ''}`;
+    const roundTrip = cheapest.itineraries > 1 ? 'Round trip' : 'One way';
+    detailsEl.textContent = `${cheapest.airline} • ${stopsText} • ${formatDuration(cheapest.duration)} • ${roundTrip} • per person`;
+
+    // Show additional offers
+    if (data.offers.length > 1) {
+        offersEl.innerHTML = `
+      <p style="font-family: var(--font-heading); text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.75rem;">
+        Other options (${data.count} found)
+      </p>
+      ${data.offers.slice(1).map(offer => `
+        <div style="padding: 0.75rem; background: var(--color-bg); border-radius: 8px; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+          <span>${offer.airline} • ${offer.stops === 0 ? 'Nonstop' : offer.stops + ' stop' + (offer.stops > 1 ? 's' : '')} • ${formatDuration(offer.duration)}</span>
+          <strong style="font-family: var(--font-heading);">$${parseFloat(offer.price).toLocaleString()}</strong>
+        </div>
+      `).join('')}
+    `;
+    } else {
+        offersEl.innerHTML = '';
+    }
+
+    resultEl.style.display = 'block';
     resultEl.classList.add('visible');
-
+    searchBtn.disabled = false;
+    searchBtn.textContent = 'Search Flights';
     resultEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    showLoading();
+
+    const origin = document.getElementById('origin').value.toUpperCase();
+    const destination = document.getElementById('destination').value.toUpperCase();
+    const departDate = document.getElementById('depart-date').value;
+    const returnDate = document.getElementById('return-date').value;
+    const adults = document.getElementById('travelers').value;
+
+    try {
+        const res = await fetch('/api/flights', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                origin,
+                destination,
+                departDate,
+                returnDate: returnDate || undefined,
+                adults,
+            }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            showError(data.error || 'Something went wrong.');
+            return;
+        }
+
+        if (!data.found) {
+            showError(data.message || 'No flights found for this route.');
+            return;
+        }
+
+        showResults(data);
+    } catch (err) {
+        showError('Network error. Make sure the API server is running (npm run dev:all).');
+    }
 });
