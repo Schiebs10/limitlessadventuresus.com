@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact — Limitless Adventure</title>
+    <meta name="description"
+        content="Get in touch with Limitless Adventure. Reach out for custom trip quotes, questions, or partnership inquiries." />
+</head>
+
+<body>
+    <!-- Hero -->
+    <section class="hero hero--short" id="hero">
+        <img src="/images/hero-contact.png" alt="European cobblestone alley" class="hero__image" />
+        <div class="hero__overlay"></div>
+        <div class="hero__content">
+            <h1 class="hero__title">Get In Touch</h1>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Info -->
+                <div class="contact-info fade-in">
+                    <h2 class="contact-info__title">Let's Talk</h2>
+                    <p style="margin-bottom: 2rem; color: var(--color-text-light);">
+                        Have a question, need a custom quote, or just want to chat about your dream destination?
+                        We'd love to hear from you.
+                    </p>
+
+                    <div class="contact-info__item">
+                        <span class="contact-info__icon">📧</span>
+                        <div>
+                            <p class="contact-info__label">Email</p>
+                            <p class="contact-info__value">hello@limitlessadventureus.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info__item">
+                        <span class="contact-info__icon">📞</span>
+                        <div>
+                            <p class="contact-info__label">Phone</p>
+                            <p class="contact-info__value">(555) 123-4567</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info__item">
+                        <span class="contact-info__icon">📍</span>
+                        <div>
+                            <p class="contact-info__label">Location</p>
+                            <p class="contact-info__value">United States</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info__item">
+                        <span class="contact-info__icon">🕐</span>
+                        <div>
+                            <p class="contact-info__label">Hours</p>
+                            <p class="contact-info__value">Mon — Fri: 9AM — 6PM CST</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <form class="contact-form fade-in" id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" placeholder="John Doe" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="john@example.com" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject" required>
+                            <option value="" disabled selected>What can we help with?</option>
+                            <option value="quote">Custom Trip Quote</option>
+                            <option value="question">General Question</option>
+                            <option value="group">Group Travel Inquiry</option>
+                            <option value="partnership">Partnership</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" placeholder="Tell us about your dream adventure..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-large" style="align-self: center;">Send
+                        Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script type="module" src="/src/contact.js"></script>
+</body>
+
+</html>

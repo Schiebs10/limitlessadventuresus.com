@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travel Calculator — Limitless Adventure</title>
+    <meta name="description"
+        content="Estimate your dream trip budget with our travel calculator. Plan your next adventure with Limitless Adventure." />
+</head>
+
+<body>
+    <!-- Hero -->
+    <section class="hero hero--short" id="hero">
+        <img src="/images/hero-calculator.png" alt="Mountain range landscape" class="hero__image" />
+        <div class="hero__overlay"></div>
+        <div class="hero__content">
+            <h1 class="hero__title">Travel Calculator</h1>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator section fade-in" id="calculator">
+        <p style="text-align: center; margin-bottom: 2rem; max-width: 100%;">
+            Get a quick estimate for your dream trip. Fill in the details below and we'll give you a ballpark budget.
+        </p>
+        <form class="calculator__form" id="calc-form">
+            <div class="form-group">
+                <label for="destination">Destination</label>
+                <select id="destination" required>
+                    <option value="" disabled selected>Select a destination</option>
+                    <option value="caribbean">Caribbean Islands</option>
+                    <option value="europe">Europe</option>
+                    <option value="asia">Southeast Asia</option>
+                    <option value="africa">Africa Safari</option>
+                    <option value="south-america">South America</option>
+                    <option value="oceania">Australia & Oceania</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="duration">Trip Duration (days)</label>
+                <input type="number" id="duration" min="1" max="60" placeholder="7" required />
+            </div>
+            <div class="form-group">
+                <label for="travelers">Number of Travelers</label>
+                <input type="number" id="travelers" min="1" max="20" placeholder="2" required />
+            </div>
+            <div class="form-group">
+                <label for="tier">Budget Tier</label>
+                <select id="tier" required>
+                    <option value="" disabled selected>Select budget tier</option>
+                    <option value="budget">Budget</option>
+                    <option value="standard">Standard</option>
+                    <option value="premium">Premium</option>
+                    <option value="luxury">Luxury</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-large" style="align-self: center;">Calculate
+                Estimate</button>
+        </form>
+
+        <div class="calculator__result" id="calc-result">
+            <h3>Estimated Budget</h3>
+            <p class="calculator__result-amount" id="result-amount">$0</p>
+            <p style="color: #555;">per person (approximate)</p>
+            <div style="margin-top: 1.5rem;">
+                <a href="/contact.html" class="btn btn-outline">Get a Custom Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <script type="module" src="/src/calculator.js"></script>
+</body>
+
+</html>
